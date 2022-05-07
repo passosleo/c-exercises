@@ -4,7 +4,7 @@
 #include <ctype.h>
 
 int main(void) {
-  char name[50], formatted_name[50];
+  char name[50];
   int size = 0, words = 1, counter = 0;
   short is_valid = 0;
 
