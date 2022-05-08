@@ -5,7 +5,7 @@
 
 int main(void) {
   char name[50];
-  int size = 0, words = 1, counter = 0;
+  int size = 0, words = 1;
   short is_valid = 0;
 
   while(!is_valid){

@@ -6,7 +6,7 @@
 int main(void) {
   char word[50], option = ' ', vowels[50], consonants[50];
   int size = 0, i = 0, j = 0, k = 0;
-  short is_valid = 0, compost = 0;
+  short is_valid = 0,
 
   //valida frase
   while(!is_valid){
