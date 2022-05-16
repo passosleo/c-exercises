@@ -45,16 +45,16 @@ int main(void) {
   int ships = 3, row;
   short player1 = 1, is_valid = 0;
 
-  printf("=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=\n\n");
-  printf("              /        ___________\n");
-  printf("     /  |\\   *    /   |           |\n");
-  printf("    *   |_\\      *    |  BATALHA  |\n");
-  printf("  ______|______       |   NAVAL   |\n");
-  printf("  \\~o~o~o~o~o~/       |___________|\n");
+  printf("____________________________________\n\n");
+  printf("              /        _________\n");
+  printf("     /  |\\   *    /   |         |\n");
+  printf("    *   |_\\      *    | BATALHA |\n");
+  printf("  ______|______       |  NAVAL  |\n");
+  printf("  \\-o-o-o-o-o-/       |_________|\n");
   printf("   \\_________/                    \n");
   printf("  ~~~~ ~ ~~ ~~~ ~ ~~~~ ~  ~~ ~ ~~~\n");
   printf("  ~~ ~~ ~~ ~ ~~ ~~ ~ ~~~ ~ ~ ~~ ~~\n");
-  printf("=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=\n\n");
+  printf("____________________________________\n\n");
   printf("---> Presione [Enter] para iniciar");
   getchar();
   clearScreen();
@@ -132,6 +132,7 @@ int main(void) {
     ships--;
     delay(2);
     clearScreen();
+        printf("\n\nDEBUGGER\n\ndirection: %c\ncolumn: %c\nrow: %d\n\n",direction,column,row);
     
   }while(ships != 0);
   
