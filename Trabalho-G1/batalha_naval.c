@@ -2,11 +2,11 @@
 #include <ctype.h>
 #include <time.h>
 
-char *battlefield[10][10], columns[10] = {'A','B','C','D','E','F','G','H','I','J'};
+char battlefield[10][10], columns[10] = {'A','B','C','D','E','F','G','H','I','J'};
 int i;
 int j;
 
-void showBattlefield(char *battlefield[i][j]) {
+void showBattlefield(char battlefield[i][j]) {
   int label = 1, k = 0;
   
   printf("   ");
@@ -25,7 +25,7 @@ void showBattlefield(char *battlefield[i][j]) {
         };
         label++;
       };
-      printf(" %s ", battlefield[i][j]);
+      printf(" %c ", battlefield[i][j]);
     };
     printf("\n");
   };
@@ -62,12 +62,14 @@ int main(void) {
   //Preenche a matriz genericamente
   for(i = 0; i < 10; i++){
     for(j = 0; j < 10; j++){
-      battlefield[i][j] = "~";
+      battlefield[i][j] = '~';
     };
   };
 
   //Tela jogador 1
   do{
+          //debugger
+    printf("\n\nDEBUGGER\n\ndirection: %c\ncol: %d\nrow: %d\n\n",direction,col,row);
     printf("\n\n----------- Jogador 1 -----------\n\n");
     
     showBattlefield(battlefield);
@@ -75,9 +77,9 @@ int main(void) {
     printf("\nNavios restantes: %d\n\n", ships);
 
     //Quebra o laço ao posicionar todos os navios
-    if(ships == 0){
-      break;
-    }
+    // if(ships == 0){
+    //   break;
+    // }
 
     do{
       //Escolha do sentido
@@ -155,13 +157,16 @@ int main(void) {
       };
     }while(!is_valid);
 
-    //debugger
-    printf("\n\nDEBUGGER\n\ndirection: %c\ncol: %d\nrow: %d\n\n",direction,col,row);
     
+
+    //Preenche matriz com o navio na direção selecionada
     if(direction == 'H'){
-      printf("i: %d",i);
-      for(i = col; i < col + 5; i++){
-        battlefield[row][i] = "N";
+      for(j = col; j < col + 5; j++){
+        battlefield[row][j] = 'N';
+      };
+    }else if(direction == 'V'){
+      for(i = row; i < row + 5; i++){
+        battlefield[i][col] = 'N';
       };
     };
     
@@ -174,6 +179,12 @@ int main(void) {
     
   }while(ships >= 0);
 
+  printf("\n\n----------- Jogador 1 -----------\n\n");
+  
+  showBattlefield(battlefield);
+  
+  printf("\nNavios restantes: %d\n\n", ships);
+  
   getchar();
   
   return 0;
