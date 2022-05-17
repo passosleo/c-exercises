@@ -169,12 +169,12 @@ int main(void) {
         battlefield[i][col] = 'N';
       };
     };
-    
-  
+
     printf("\n\nNavio posicionado com sucesso!\n\n");
     is_valid = 0;
     ships--;
     delay(2);
+    showBattlefield(battlefield);
     clearScreen();
     
   }while(ships >= 0);
