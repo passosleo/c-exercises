@@ -33,16 +33,16 @@ void showBattlefield(char *battlefield[i][j]) {
 
 void clearScreen() {
   printf("\033[0;0H\033[2J");
-}
+};
 
 void delay(unsigned int secs) {
     unsigned int end = time(0) + secs;
     while (time(0) < end);
-}
+};
 
 int main(void) {
   char column = ' ', direction = ' ';
-  int ships = 3, row = 0, index_limit = 0;
+  int ships = 3, col = 0, row = 0, index_limit = 0;
   short player1 = 1, is_valid = 0;
 
   printf("____________________________________\n\n");
@@ -66,12 +66,18 @@ int main(void) {
     };
   };
 
+  //Tela jogador 1
   do{
     printf("\n\n----------- Jogador 1 -----------\n\n");
     
     showBattlefield(battlefield);
     
     printf("\nNavios restantes: %d\n\n", ships);
+
+    //Quebra o laço ao posicionar todos os navios
+    if(ships == 0){
+      break;
+    }
 
     do{
       //Escolha do sentido
@@ -106,10 +112,12 @@ int main(void) {
           index_limit = 6;
         }else{
           index_limit = 10;
-        }
+        };
         for(int c = 0; c < index_limit; c++){
           if(column == columns[c]){
             is_valid = 1;
+            //converte a coluna de char pra int
+            col = c;
           };
         };
       };
@@ -136,14 +144,27 @@ int main(void) {
     
         if(row >= 1 && row <= index_limit){
           is_valid = 1;
-        };
+          //Subtrai 1 de row para comparar com a matriz (0 a 9)
+          row--;
+        }; 
       };
        
   
       if(!is_valid){
         printf("\nLocal inválido!\n");
       };
-    }while(!is_valid);  
+    }while(!is_valid);
+
+    //debugger
+    printf("\n\nDEBUGGER\n\ndirection: %c\ncol: %d\nrow: %d\n\n",direction,col,row);
+    
+    if(direction == 'H'){
+      printf("i: %d",i);
+      for(i = col; i < col + 5; i++){
+        battlefield[row][i] = "N";
+      };
+    };
+    
   
     printf("\n\nNavio posicionado com sucesso!\n\n");
     is_valid = 0;
@@ -151,10 +172,9 @@ int main(void) {
     delay(2);
     clearScreen();
     
-    //debugger
-    printf("\n\nDEBUGGER\n\ndirection: %c\ncolumn: %c\nrow: %d\n\n",direction,column,row);
-    
-  }while(ships != 0);
+  }while(ships >= 0);
+
+  getchar();
   
   return 0;
 };
