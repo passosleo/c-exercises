@@ -69,7 +69,7 @@ int main(void) {
   //Tela jogador 1
   do{
           //debugger
-    printf("\n\nDEBUGGER\n\ndirection: %c\ncol: %d\nrow: %d\n\n",direction,col,row);
+    // printf("\n\nDEBUGGER\n\ndirection: %c\ncol: %d\nrow: %d\n\n",direction,col,row);
     printf("\n\n----------- Jogador 1 -----------\n\n");
     
     showBattlefield(battlefield);
@@ -77,13 +77,13 @@ int main(void) {
     printf("\nNavios restantes: %d\n\n", ships);
 
     //Quebra o laço ao posicionar todos os navios
-    // if(ships == 0){
-    //   break;
-    // }
+    if(ships == 0){
+      break;
+    }
 
     do{
       //Escolha do sentido
-      printf("\nEscolha o sentido do navio\n[H] para Horizontal\n[V] para Vertical\n");
+      printf("\n[H] para Horizontal\n[V] para Vertical\nEscolha o sentido do navio:");
       fflush(stdin);
       fgets(&direction, 50, stdin);
 
@@ -125,7 +125,7 @@ int main(void) {
       };
   
       if(!is_valid){
-        printf("\nLocal inválido!\n");
+        printf("\nLocal inválido! Para o sentido horizontal, a coluna limite é [F].\n");
       };
     }while(!is_valid);
   
@@ -136,7 +136,7 @@ int main(void) {
       printf("\nEscolha a linha: ");
       scanf("%d%*c", &row);
 
-      //Valida se é número, se direção for horizontal limita na coluna F (index_limit)
+      //Valida se é número, se direção for vertical limita na coluna F (index_limit)
       if(!isalpha(row)){
         if(direction == 'V'){
           index_limit = 6;
@@ -150,40 +150,57 @@ int main(void) {
           row--;
         }; 
       };
-       
   
       if(!is_valid){
-        printf("\nLocal inválido!\n");
+        printf("\nLocal inválido! Para o sentido vertical, a linha limite é [6].\n");
       };
     }while(!is_valid);
 
+    is_valid = 1;
     
-
-    //Preenche matriz com o navio na direção selecionada
+    //Preenche matriz com o navio ocupando 5 indices na direção selecionada, e valida se há outro navio no caminho
     if(direction == 'H'){
       for(j = col; j < col + 5; j++){
-        battlefield[row][j] = 'N';
+        if(battlefield[row][j] != '~'){
+          is_valid = 0;
+          break;
+        };
+      };
+      if(is_valid){
+        for(j = col; j < col + 5; j++){
+          battlefield[row][j] = 'N';
+        };
       };
     }else if(direction == 'V'){
       for(i = row; i < row + 5; i++){
-        battlefield[i][col] = 'N';
+        if(battlefield[i][col] != '~'){
+          is_valid = 0;
+          break;
+        };
+      };
+      if(is_valid){
+        for(i = row; i < row + 5; i++){
+          battlefield[i][col] = 'N';
+        };
       };
     };
 
-    printf("\n\nNavio posicionado com sucesso!\n\n");
-    is_valid = 0;
-    ships--;
-    delay(2);
-    showBattlefield(battlefield);
-    clearScreen();
-    
-  }while(ships >= 0);
+    //Se todas as validações passaram, limpa a tela, indica que o navio foi posicionado e avança para o próximo
+    if(!is_valid){
+      printf("\nLocal inválido! Já existe um navio no caminho.\n");
+      delay(2);
+      showBattlefield(battlefield);
+      clearScreen();
+    }else{
+      printf("\n\nNavio posicionado com sucesso!\n\n");
+      is_valid = 0;
+      ships--;
+      delay(2);
+      showBattlefield(battlefield);
+      clearScreen();
+    };
 
-  printf("\n\n----------- Jogador 1 -----------\n\n");
-  
-  showBattlefield(battlefield);
-  
-  printf("\nNavios restantes: %d\n\n", ships);
+  }while(ships >= 0 || !is_valid);
   
   getchar();
   
