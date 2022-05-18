@@ -87,8 +87,8 @@ int main(void) {
     col = 0,
     row = 0,
     index_limit = 0,
-    shots = 30,
-    hits = 15,
+    hits = ships*5,
+    shots = hits*2,
     replay = 0;
     
     clearScreen();
@@ -250,13 +250,13 @@ int main(void) {
   
     //Tela jogador 2
     do{
-      printf("---------- Scoreboard -----------\n");
+      printf("---------- Scoreboard -----------\n\n");
       if(score_p1 < score_p2){
         printf("* Jogador 2 --- %d\n* Jogador 1 --- %d",score_p2,score_p1);
       }else{
         printf("* Jogador 1 --- %d\n* Jogador 2 --- %d",score_p1,score_p2);
       }
-      printf("\n---------------------------------\n");
+      printf("\n\n---------------------------------\n");
       printf("\n----------- Jogador 2 -----------\n\n");
   
       showBattlefield(battlefield,0);
