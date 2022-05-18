@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <ctype.h>
 #include <time.h>
 
@@ -83,7 +84,7 @@ int main(void) {
   do{
     column = ' ',
     direction = ' ',
-    ships = 3, 
+    ships = 1, 
     col = 0,
     row = 0,
     index_limit = 0,
@@ -166,7 +167,7 @@ int main(void) {
         };
     
         if(!is_valid){
-          printf("\nLocal inválido!.\n");
+          printf("\nLocal inválido!\n");
         };
       }while(!is_valid);
     
@@ -193,7 +194,7 @@ int main(void) {
         };
     
         if(!is_valid){
-          printf("\nLocal inválido!.\n");
+          printf("\nLocal inválido!\n");
         };
       }while(!is_valid);
   
@@ -257,7 +258,7 @@ int main(void) {
         printf("* Jogador 1 --- %d\n* Jogador 2 --- %d",score_p1,score_p2);
       }
       printf("\n\n---------------------------------\n");
-      printf("\n----------- Jogador 2 -----------\n\n");
+      printf("----------- Jogador 2 -----------\n\n");
   
       showBattlefield(battlefield,0);
   
@@ -348,5 +349,5 @@ int main(void) {
     
   }while(replay == 1);
   
-  return 0;
+  return EXIT_SUCCESS;
 };
