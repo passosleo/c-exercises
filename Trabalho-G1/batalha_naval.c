@@ -76,9 +76,9 @@ int main(void) {
   printf("      __|_|__|_|_\n");
   printf("    _|___________|__\n");
   printf("   |o o o o o o o o/\n");
-  printf("~ ~~ ~~~ ~ ~~ ~~~ ~ ~~~~ ~  ~~ ~ ~~~\n");
-  printf("~ ~~~~ ~~ ~~ ~ ~~ ~~ ~ ~~~ ~ ~ ~~ ~~\n");
-  printf("\n---> Presione [Enter] para iniciar");
+  printf("~ ~~ ~~~ ~ ~~ ~~~ ~ ~~~~ ~  ~~ ~ ~~~ ~~ ~ ~~~~\n");
+  printf("~ ~~~~ ~~ ~~ ~ ~~ ~~ ~ ~~~ ~ ~ ~~ ~~ ~~~~ ~~ ~\n");
+  printf("\n------- Presione [Enter] para iniciar -------");
   getchar();
 
   do{
