@@ -6,7 +6,7 @@ char battlefield[10][10], columns[10] = {'A','B','C','D','E','F','G','H','I','J'
 int i;
 int j;
 
-void showBattlefield(char battlefield[i][j]) {
+void showBattlefield(char battlefield[i][j], short visible) {
   int label = 1, k = 0;
   
   printf("   ");
@@ -25,7 +25,15 @@ void showBattlefield(char battlefield[i][j]) {
         };
         label++;
       };
-      printf(" %c ", battlefield[i][j]);
+      if(visible){
+        printf(" %c ", battlefield[i][j]);
+      }else if(battlefield[i][j] == 'o'){
+        printf(" o ");
+      }else if(battlefield[i][j] == 'X'){
+        printf(" X ");
+      }else{
+        printf(" ~ ");
+      };
     };
     printf("\n");
   };
@@ -42,20 +50,33 @@ void delay(unsigned int secs) {
 
 int main(void) {
   char column = ' ', direction = ' ';
-  int ships = 3, col = 0, row = 0, index_limit = 0;
-  short player1 = 1, is_valid = 0;
-
-  printf("____________________________________\n\n");
-  printf("              /        _________\n");
-  printf("     /  |\\   *    /   |         |\n");
-  printf("    *   |_\\      *    | BATALHA |\n");
-  printf("  ______|______       |  NAVAL  |\n");
-  printf("  \\-o-o-o-o-o-/       |_________|\n");
-  printf("   \\_________/                    \n");
-  printf("  ~~~~ ~ ~~ ~~~ ~ ~~~~ ~  ~~ ~ ~~~\n");
-  printf("  ~~ ~~ ~~ ~ ~~ ~~ ~ ~~~ ~ ~ ~~ ~~\n");
-  printf("____________________________________\n\n");
-  printf("---> Presione [Enter] para iniciar");
+  int ships = 1, 
+      col = 0,
+      row = 0,
+      index_limit = 0,
+      shots = 3,
+      hits = 2,
+      score_p1 = 0,
+      score_p2 = 0;
+  short player1 = 0, player2 = 0, is_valid = 0;
+  
+  printf(" _           _   _   _           _     _\n");
+  printf("| |         | | | | | |         | |   (_)\n");
+  printf("| |__   __ _| |_| |_| | ___  ___| |__  _ _ __\n");
+  printf("| '_ \\ / _` | __| __| |/ _ \\/ __| '_ \\| | '_ \\\n");
+  printf("| |_) | (_| | |_| |_| |  __/\\__ \\ | | | | |_) |\n");
+  printf("|_.__/ \\__,_|\\__|\\__|_|\\___||___/_| |_|_| .__/\n");
+  printf("                                        | |\n");
+  printf("                                        |_|\n");   
+  printf("          (`-,-,\n");
+  printf("        ('(_,( )\n");
+  printf("         _   `_'\n");
+  printf("      __|_|__|_|_\n");
+  printf("    _|___________|__\n");
+  printf("   |o o o o o o o o/\n");
+  printf("~ ~~ ~~~ ~ ~~ ~~~ ~ ~~~~ ~  ~~ ~ ~~~\n");
+  printf("~ ~~~~ ~~ ~~ ~ ~~ ~~ ~ ~~~ ~ ~ ~~ ~~\n");
+  printf("\n---> Presione [Enter] para iniciar");
   getchar();
   clearScreen();
 
@@ -66,24 +87,27 @@ int main(void) {
     };
   };
 
+  player1 = 1;
+
   //Tela jogador 1
   do{
           //debugger
     // printf("\n\nDEBUGGER\n\ndirection: %c\ncol: %d\nrow: %d\n\n",direction,col,row);
     printf("\n\n----------- Jogador 1 -----------\n\n");
     
-    showBattlefield(battlefield);
+    showBattlefield(battlefield,1);
     
-    printf("\nNavios restantes: %d\n\n", ships);
-
     //Quebra o laço ao posicionar todos os navios
     if(ships == 0){
+      player1 = 0;
       break;
     }
 
+    printf("\nNavios restantes: %d\n\n", ships);
+
     do{
       //Escolha do sentido
-      printf("\n[H] para Horizontal\n[V] para Vertical\nEscolha o sentido do navio:");
+      printf("\n[H] para Horizontal\n[V] para Vertical\nEscolha o sentido do navio: ");
       fflush(stdin);
       fgets(&direction, 50, stdin);
 
@@ -125,7 +149,7 @@ int main(void) {
       };
   
       if(!is_valid){
-        printf("\nLocal inválido! Para o sentido horizontal, a coluna limite é [F].\n");
+        printf("\nLocal inválido!.\n");
       };
     }while(!is_valid);
   
@@ -152,7 +176,7 @@ int main(void) {
       };
   
       if(!is_valid){
-        printf("\nLocal inválido! Para o sentido vertical, a linha limite é [6].\n");
+        printf("\nLocal inválido!.\n");
       };
     }while(!is_valid);
 
@@ -189,20 +213,103 @@ int main(void) {
     if(!is_valid){
       printf("\nLocal inválido! Já existe um navio no caminho.\n");
       delay(2);
-      showBattlefield(battlefield);
+      showBattlefield(battlefield,1);
       clearScreen();
     }else{
       printf("\n\nNavio posicionado com sucesso!\n\n");
       is_valid = 0;
       ships--;
       delay(2);
-      showBattlefield(battlefield);
+      showBattlefield(battlefield,1);
       clearScreen();
     };
 
-  }while(ships >= 0 || !is_valid);
+  }while(ships >= 0 || !is_valid && player1);
   
+  printf("\nTodos os navios foram posicionados!\n");
+  printf("\n---> Presione [Enter] para limpar a tela\n");
   getchar();
+  clearScreen();
+
+  player2 = 1;
+
+  //Tela jogador 2
+  do{
+    printf("\n\n----------- Jogador 2 -----------\n\n");
+
+    showBattlefield(battlefield,0);
+
+    if(shots == 0 || hits == 0){
+      break;
+    };
+
+    printf("\nTiros restantes: %d\n",shots);
+
+    do{
+      printf("\nEscolha a coluna: ");
+      fflush(stdin);
+      fgets(&column, 50, stdin);
+
+      //Valida se é letra e se esta entre as colunas válidas
+      if(isalpha(column)){
+        column = toupper(column);
+        for(int c = 0; c < 10; c++){
+          if(column == columns[c]){
+            is_valid = 1;
+            //converte a coluna de char pra int para comparar com a matriz (0 a 9)
+            col = c;
+          };
+        };
+      };
+
+      if(!is_valid){
+        printf("\nColuna inválida!\n");
+      };
+    }while(!is_valid);
+
+    is_valid = 0;
+
+    do{
+      printf("\nEscolha a linha: ");
+      scanf("%d%*c", &row);
+
+      //Valida se é número, se direção for vertical limita na coluna F (index_limit)
+      if(!isalpha(row)){
+        if(row >= 1 && row <= 10){
+          is_valid = 1;
+          //Subtrai 1 de row para comparar com a matriz (0 a 9)
+          row--;
+        }; 
+      };
+  
+      if(!is_valid){
+        printf("\nLinha inválida!\n");
+      };
+    }while(!is_valid);
+
+    //Indica os erros e acertos também valida os locais disparados
+    if(battlefield[row][col] == 'N'){
+      printf("\nAcertou!!!\n");
+      shots--;
+      battlefield[row][col] = 'X';
+      hits--;
+    }else if(battlefield[row][col] == 'X' || battlefield[row][col] == 'o'){
+      printf("\nOps, você já disparou aqui...\n");
+    }else{
+      printf("\nErrou!!!\n");
+      shots--;
+      battlefield[row][col] = 'o';
+    };
+
+    is_valid = 0;
+    delay(2);
+    clearScreen();
+    
+  }while(shots >= 0 || hits >= 0);
+
+  if(hits == 0){
+    
+  };
   
   return 0;
 };
