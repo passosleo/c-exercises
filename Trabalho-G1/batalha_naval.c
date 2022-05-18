@@ -84,7 +84,7 @@ int main(void) {
   do{
     column = ' ',
     direction = ' ',
-    ships = 1, 
+    ships = 3, 
     col = 0,
     row = 0,
     index_limit = 0,
