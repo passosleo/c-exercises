@@ -1,2 +1,2 @@
-# Programacao II
-Exercícios realizados na disciplina de Programação II pelo curso de Sistemas de Informação da FACCAT.
+## C Exercices
+Algorithms exercises solved with C Language for Programming II discipline of my graduation.
